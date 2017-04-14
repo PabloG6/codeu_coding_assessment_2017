@@ -18,37 +18,45 @@ import java.util.Collection;
 
 final class MyJSON implements JSON {
 
+    String name;
+    Object value;
+    JSON jsonValue;
     @Override
     public JSON getObject(String name) {
         // TODO: implement this
-        return null;
+        return jsonValue;
     }
 
     @Override
     public JSON setObject(String name, JSON value) {
-
+        this.name = name;
+        this.jsonValue = value;
         return this;
     }
 
     @Override
     public String getString(String name) {
-        // TODO: implement this
-        return null;
+
+        return name;
     }
 
     @Override
     public JSON setString(String name, String value) {
         // TODO: implement this
+        this.name = name;
+        this.value = value;
         return this;
     }
 
     @Override
     public void getObjects(Collection<String> names) {
         // TODO: implement this
+        //// TODO: 4/14/2017 implement recursion that breaks when object being returned is null
     }
 
     @Override
     public void getStrings(Collection<String> names) {
         // TODO: implement this
+        //// TODO: 4/14/2017 implement recursion that breaks out when object being returned will be null
     }
 }

@@ -77,15 +77,21 @@ final class TestMain {
             public void run(JSONFactory factory) throws Exception {
                 MyJSONParser parser = new MyJSONParser();
                 parser.parse("{{");
+
             }
         });
 
-        tests.add("Simple json capture test", new Test() {
+        tests.add("Json capture check", new Test() {
             @Override
             public void run(JSONFactory factory) throws Exception {
-                m
+                ////basic json test with strings and values
+                MyJSONParser jsonParser = new MyJSONParser();
+                jsonParser.parse("{\"first_name\": Pablo, \"last_name\": Grant}");
+
+
             }
         });
+
         tests.run(new JSONFactory() {
             @Override
             public JSONParser parser() {

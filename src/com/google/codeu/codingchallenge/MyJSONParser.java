@@ -15,21 +15,30 @@
 package com.google.codeu.codingchallenge;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Stack;
+
 final class MyJSONParser implements JSONParser {
+    ArrayList<Boolean> positionOfBrackets = new ArrayList<>();
+    private static final String key_regex = "(\"[\\w\\s ]+\")";
 
     @Override
     public JSON parse(String in) throws IOException {
 
         //do a check of the string that's been implemented by pushing value on stack
-        if (isBalanced(in)) {
+        if (isBalanced(in, positionOfBrackets)) {
 
             //find the first key value
 
+            for (int i = 0; i < positionOfBrackets.size(); i++) {
+                boolean isFrontCurly = positionOfBrackets.get(i);
+                if (isFrontCurly) {
+                    
+                }
 
+            }
             return new MyJSON();
-        }
-        else {
+        } else {
 
             throw new IOException("This is not a valid json object");
         }
@@ -37,19 +46,24 @@ final class MyJSONParser implements JSONParser {
     }
 
     /**
-     * @param in string to validate
+     * @param in                 string to validate
+     * @param positionOfBrackets store the position of the brackets for quickeer look up
      * @return return boolean if expression is unbalanced
      */
-    private static boolean isBalanced(String in) {
+    private static boolean isBalanced(String in, ArrayList<Boolean> positionOfBrackets) {
         Stack<Character> brackets = new Stack<>();
         for (int i = 0; i < in.length(); i++) {
             char var = in.charAt(i);
-            System.out.println("var "+ var);
+
+
             if (var == '{') {
+                positionOfBrackets.add(true);
                 brackets.push(var);
-            } else if (var=='}') {
-                if(brackets.isEmpty()) return false;
-                if(brackets.pop()!='{') return false;
+            } else if (var == '}') {
+                positionOfBrackets.add(false);
+
+                if (brackets.isEmpty()) return false;
+                if (brackets.pop() != '{') return false;
 
             }
         }

@@ -12,6 +12,6 @@ public class MyJSONFactory implements JSONFactory {
 
     @Override
     public JSONParser parser() {
-        return null;
+        return new MyJSONParser();
     }
 }
