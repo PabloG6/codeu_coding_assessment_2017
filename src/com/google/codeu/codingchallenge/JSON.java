@@ -17,41 +17,43 @@ package com.google.codeu.codingchallenge;
 import java.io.IOException;
 import java.util.Collection;
 
+
 interface JSON {
 
-  // GET OBJECT
-  //
-  // Get the value of the nested object with the given name. If there is
-  // no nested object with that name, the method will return null.
-  JSON getObject(String name);
 
-  // SET OBJECT
-  //
-  // Set the value of the nested object with the given name. Any old value
-  // should be overwritten. This method will always return a reference to
-  // "this".
-  JSON setObject(String name, JSON value);
+    // GET OBJECT
+    //
+    // Get the value of the nested object with the given name. If there is
+    // no nested object with that name, the method will return null.
+    JSON getObject(String name);
 
-  // GET STRING
-  //
-  // Get the string value within this object that has the given name. if
-  // there is no string with the given name, the method will return null.
-  String getString (String name);
+    // SET OBJECT
+    //
+    // Set the value of the nested object with the given name. Any old value
+    // should be overwritten. This method will always return a reference to
+    // "this".
+    JSON setObject(String name, JSON value);
 
-  // SET STRING
-  //
-  // Set the string that should be stored under the given name. Any old value
-  // should be overwritten. This method will always return a reference to
-  // "this".
-  JSON setString(String name, String value);
+    // GET STRING
+    //
+    // Get the string value within this object that has the given name. if
+    // there is no string with the given name, the method will return null.
+    String getString(String name);
 
-  // GET OBJECTS
-  //
-  // Copy the names of all object values to the given collection.
-  void getObjects(Collection<String> names);
+    // SET STRING
+    //
+    // Set the string that should be stored under the given name. Any old value
+    // should be overwritten. This method will always return a reference to
+    // "this".
+    JSON setString(String name, String value);
 
-  // GET STRINGS
-  //
-  // Copy the names of all string values to the given collection.
-  void getStrings(Collection<String> names);
+    // GET OBJECTS
+    //
+    // Copy the names of all object values to the given collection.
+    void getObjects(Collection<String> names);
+
+    // GET STRINGS
+    //
+    // Copy the names of all string values to the given collection.
+    void getStrings(Collection<String> names);
 }

@@ -19,33 +19,44 @@ import java.util.HashSet;
 
 final class Asserts {
 
-  public static final class AssertException extends RuntimeException {
-    public AssertException(String message) {
-      super(message);
+    public static final class AssertException extends RuntimeException {
+        public AssertException(String message) {
+            super(message);
+        }
     }
-  }
 
-  public static void isTrue(boolean value, String message) {
-    if (!value) {
-      throw new AssertException(message);
+    public static void isTrue(boolean value, String message) {
+        if (!value) {
+            throw new AssertException(message);
+        }
     }
-  }
 
-  public static void isNotNull(Object o) {
-    if (o == null) {
-      throw new AssertException("Unexpected null value");
-    }
-  }
 
-  public static void isEqual(Object a, Object b) {
-    if (a == b) {
-      // all is good
-    } else if (a == null ^ b == null) {
-      throw new AssertException(String.format("%s does not equal %s", a, b));
-    } else if (a.equals(b) && b.equals(a)) {
-      // all is good
-    } else {
-      throw new AssertException(String.format("%s does not equal %s", a, b));
+    //checks if value in s
+    public static void isNotNull(Object o) {
+        if (o == null) {
+            throw new AssertException("Unexpected null value");
+        }
     }
-  }
+
+
+    /**
+     * checks if both objects passed to the method is true
+     *
+     * @param a first value
+     * @param b second value
+     */
+    public static void isEqual(Object a, Object b) {
+        if (a == b) {
+            // all is good
+        } else if (a == null ^ b == null) {
+
+            throw new AssertException(String.format("%s does not equal %s", a, b));
+        } else if (a.equals(b) && b.equals(a)) {
+            // all is good
+        } else {
+
+            throw new AssertException(String.format("%s does not equal %s", a, b));
+        }
+    }
 }

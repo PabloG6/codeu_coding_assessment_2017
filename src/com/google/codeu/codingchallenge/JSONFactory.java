@@ -14,15 +14,16 @@
 
 package com.google.codeu.codingchallenge;
 
+
 interface JSONFactory {
 
-  // OBJECT
-  //
-  // Create a new json object.
-  JSON object();
+    // OBJECT
+    //
+    // Create a new json object.
+    JSON object();
 
-  // PARSER
-  //
-  // Create a new json parser.
-  JSONParser parser();
+    // PARSER
+    //
+    // Create a new json parser.
+    JSONParser parser();
 }

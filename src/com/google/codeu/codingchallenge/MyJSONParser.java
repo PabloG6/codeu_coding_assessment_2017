@@ -15,12 +15,44 @@
 package com.google.codeu.codingchallenge;
 
 import java.io.IOException;
-
+import java.util.Stack;
 final class MyJSONParser implements JSONParser {
 
-  @Override
-  public JSON parse(String in) throws IOException {
-    // TODO: implement this
-    return new MyJSON();
-  }
+    @Override
+    public JSON parse(String in) throws IOException {
+
+        //do a check of the string that's been implemented by pushing value on stack
+        if (isBalanced(in)) {
+
+            //find the first key value
+
+
+            return new MyJSON();
+        }
+        else {
+
+            throw new IOException("This is not a valid json object");
+        }
+
+    }
+
+    /**
+     * @param in string to validate
+     * @return return boolean if expression is unbalanced
+     */
+    private static boolean isBalanced(String in) {
+        Stack<Character> brackets = new Stack<>();
+        for (int i = 0; i < in.length(); i++) {
+            char var = in.charAt(i);
+            System.out.println("var "+ var);
+            if (var == '{') {
+                brackets.push(var);
+            } else if (var=='}') {
+                if(brackets.isEmpty()) return false;
+                if(brackets.pop()!='{') return false;
+
+            }
+        }
+        return brackets.isEmpty();
+    }
 }

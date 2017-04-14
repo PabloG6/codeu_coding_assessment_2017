@@ -18,37 +18,37 @@ import java.util.Collection;
 
 final class MyJSON implements JSON {
 
-  @Override
-  public JSON getObject(String name) {
-    // TODO: implement this
-    return null;
-  }
+    @Override
+    public JSON getObject(String name) {
+        // TODO: implement this
+        return null;
+    }
 
-  @Override
-  public JSON setObject(String name, JSON value) {
-    // TODO: implement this
-    return this;
-  }
+    @Override
+    public JSON setObject(String name, JSON value) {
 
-  @Override
-  public String getString(String name) {
-    // TODO: implement this
-    return null;
-  }
+        return this;
+    }
 
-  @Override
-  public JSON setString(String name, String value) {
-    // TODO: implement this
-    return this;
-  }
+    @Override
+    public String getString(String name) {
+        // TODO: implement this
+        return null;
+    }
 
-  @Override
-  public void getObjects(Collection<String> names) {
-    // TODO: implement this
-  }
+    @Override
+    public JSON setString(String name, String value) {
+        // TODO: implement this
+        return this;
+    }
 
-  @Override
-  public void getStrings(Collection<String> names) {
-    // TODO: implement this
-  }
+    @Override
+    public void getObjects(Collection<String> names) {
+        // TODO: implement this
+    }
+
+    @Override
+    public void getStrings(Collection<String> names) {
+        // TODO: implement this
+    }
 }
