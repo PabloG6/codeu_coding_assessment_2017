@@ -14,12 +14,22 @@ public class NewTest {
                 final MyJSONParser parser = new MyJSONParser();
                 final MyJSON obj = parser.parse("{ \"name\":\"sam doe\" }");
 
-               Asserts.isEqual("sam doe", obj.getString("name"));
+              Asserts.isEqual("sam doe", obj.getString("name"));
 
 
             }
         });
+        tests.add("Level 1 JSON Test", new Test() {
+            @Override
+            public void run(JSONFactory factory) throws Exception {
+                //testing json object with commas
+                final MyJSONParser parser = new MyJSONParser();
+                final MyJSON obj = parser.parse("{ \"name\":\"sam doe\", " +
+                        "\"school\": \"Manchester High \" }");
 
+                 
+            }
+        });
         tests.run(new JSONFactory() {
             @Override
             public JSON object() {
@@ -31,6 +41,9 @@ public class NewTest {
                 return null;
             }
         });
+
+        ;
+
 
     }
 }
