@@ -15,48 +15,52 @@
 package com.google.codeu.codingchallenge;
 
 import java.util.Collection;
+import java.util.HashMap;
 
 final class MyJSON implements JSON {
+    private HashMap<String, String> stringObjects = new HashMap<>();
+    private HashMap<String, MyJSON> jsonObjects = new HashMap<>();
 
     protected MyJSON() {
     }
 
-    String name;
-    Object value;
-    String val;
-    MyJSON jsonValue;
 
     @Override
     public MyJSON getObject(String name) {
-        // TODO: implement this
-        return jsonValue;
+        // TODO: implement
+        if (jsonObjects.containsKey(name)) {
+            return jsonObjects.get(name);
+        }
+
+
+        return null;
     }
 
     @Override
     public MyJSON setObject(String name, JSON value) {
-        this.name = name;
-        this.jsonValue = (MyJSON) value;
+        jsonObjects.put(name, (MyJSON) value);
         return this;
     }
 
     @Override
     public String getString(String name) {
-
-        return val;
+        if (stringObjects.containsKey(name)) {
+            return stringObjects.get(name);
+        }
+        return null;
     }
 
     @Override
     public MyJSON setString(String name, String value) {
         // TODO: implement this
-        this.name = name;
-        this.val = value;
+        stringObjects.put(name, value);
+
         return this;
     }
 
     @Override
     public void getObjects(Collection<String> names) {
-        // TODO: implement this
-        //// TODO: 4/14/2017 implement recursion that breaks when object being returned is null
+
     }
 
     @Override

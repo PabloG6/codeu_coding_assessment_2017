@@ -28,10 +28,15 @@ final class MyJSONParser implements JSONParser {
     private static final String key_regex = "(\"[\\w\\s ]+\")";
     private MyJSON myJSON = new MyJSON();
     ArrayList<Integer> bracketPositions = new ArrayList<>();
+    private int preComma = 1;
+    private int nextComma;
+    int commaCount;
 
     //keep position of commas and colons
     ArrayList<Integer> commas = new ArrayList<>();
     ArrayList<Integer> colons = new ArrayList<>();
+    private int colonPosition = 0;
+    private int colonCount = 0;
 
     @Override
     public MyJSON parse(String in) throws IOException {
@@ -104,26 +109,37 @@ final class MyJSONParser implements JSONParser {
 
 
         //find first colon
-        int colonPosition = in.indexOf(":");
+        setColonPositions();
         String key = matcher(key_regex, in);
         String value = null;
-
         //if a string value is not presetn but no colon the json object is invalid.
-        if (key == null && !in.contains(":")) {
+        if (key == null && in.contains(":")) {
             throw new IOException("This is not a valid json object");
         }
 
 
-        //if it's not a json then
-        if (in.charAt(colonPosition + 1) == '{') {
-            myJSON.setObject(key, deepJSON(in.substring(colonPosition)));
-        } else {
-            value = matcher(key_regex, in.substring(colonPosition+1, in.indexOf(",")));
-            myJSON.setString(key, value);
+        //if it's not a json then do the other thing
+        nextComma = commas.get(0);
+        while (commaCount < commas.size()) {
+
+            if (in.charAt(colonPosition + 1) == '{') {
+                myJSON.setObject(key, deepJSON(in.substring(colonPosition)));
+            } else {
+
+                value = matcher(key_regex, in.substring(preComma+1, nextComma).substring(in.indexOf(":")));
+                setColonPositions();
+                setCommaPositions(nextComma);
+                myJSON.setString(key, value);
+            }
+
         }
-
-
         return myJSON;
+    }
+
+    private void setColonPositions() {
+
+
+        colonPosition = colons.get(colonCount+1);
     }
 
     /**
@@ -135,18 +151,17 @@ final class MyJSONParser implements JSONParser {
 
     private MyJSON deepJSON(String in) throws IOException {
         String key = findKey(0, in);
-        System.out.println("Deep JSON "+ in);
         MyJSON object = new MyJSON();
         if (key == null) {
             throw new IOException("This is not a valid json object");
 
         } else if (in.charAt(in.indexOf(":")) == '{')
-            return object.setObject(key, deepJSON(in.substring(in.indexOf(":"+1))));
+            return object.setObject(key, deepJSON(in.substring(in.indexOf(":") + 1)));
 
         else {
             //if the next object is not a { but a string create a json object
             String value = matcher(key, in);
-            if(value == null) {
+            if (value == null) {
                 throw new IOException("Not a valid json object");
             }
             return object.setString(key, value);
@@ -188,10 +203,10 @@ final class MyJSONParser implements JSONParser {
 
     //simple validation check to see if a key contains a value;
     private void simpleValid(String in) throws IOException {
-        int colonPosition = in.indexOf(":");
+
         String key = matcher(key_regex, in);
 
-        //if a string value is not presetn but no colon the json object is invalid.
+        //if a string value is not present but no colon the json object is invalid.
         if (key == null && !in.contains(":")) {
             throw new IOException("This is not a valid json object");
         }
@@ -199,11 +214,20 @@ final class MyJSONParser implements JSONParser {
 
     }
 
+    /**
+     * set the previous and nextCommaPositions
+     */
+    private void setCommaPositions(int next) {
+
+        this.preComma = next;
+        this.nextComma = commas.get(commaCount+1);
+        commaCount++;
+    }
 
     //prints log statements for easier debugging
     public static class Log {
         public static void i(String key, String value) {
-            System.out.printf("%s , %s", key, value);
+            System.out.printf("%s , %s \n", key, value);
         }
 
     }

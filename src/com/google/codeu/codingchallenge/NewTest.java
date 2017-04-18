@@ -1,5 +1,7 @@
 package com.google.codeu.codingchallenge;
 
+import sun.rmi.runtime.Log;
+
 /**
  * Created by Pablo on 4/5/2017.
  */
@@ -35,7 +37,8 @@ public class NewTest {
                 final MyJSONParser parser = new MyJSONParser();
                 final MyJSON obj = parser.parse("{\"name\":\"John\",\"age\":30, \"cars\": { \"car1\":\"Ford\",\"car2\":" +
                         "\"BMW\", \"car3\":\"Fiat\"}}");
-                System.out.println(obj.getObject("name").toString());
+                MyJSONParser.Log.i("name", obj.getString("name"));
+                MyJSONParser.Log.i("age", obj.getString("age"));
             }
         });
         tests.run(new JSONFactory() {

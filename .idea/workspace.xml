@@ -2,12 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="1d918b9f-db4d-40b2-8a16-9168bdc4c00f" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/codeu_coding_assessment_2017/com/google/codeu/codingchallenge/MyJSONParser$BracketPositions.class" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/codeu_coding_assessment_2017/com/google/codeu/codingchallenge/MyJSON.class" afterPath="$PROJECT_DIR$/out/production/codeu_coding_assessment_2017/com/google/codeu/codingchallenge/MyJSON.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/codeu_coding_assessment_2017/com/google/codeu/codingchallenge/MyJSONParser$Log.class" afterPath="$PROJECT_DIR$/out/production/codeu_coding_assessment_2017/com/google/codeu/codingchallenge/MyJSONParser$Log.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/codeu_coding_assessment_2017/com/google/codeu/codingchallenge/MyJSONParser.class" afterPath="$PROJECT_DIR$/out/production/codeu_coding_assessment_2017/com/google/codeu/codingchallenge/MyJSONParser.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/codeu_coding_assessment_2017/com/google/codeu/codingchallenge/NewTest$1.class" afterPath="$PROJECT_DIR$/out/production/codeu_coding_assessment_2017/com/google/codeu/codingchallenge/NewTest$1.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/codeu_coding_assessment_2017/com/google/codeu/codingchallenge/NewTest$2.class" afterPath="$PROJECT_DIR$/out/production/codeu_coding_assessment_2017/com/google/codeu/codingchallenge/NewTest$2.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/codeu_coding_assessment_2017/com/google/codeu/codingchallenge/NewTest$3.class" afterPath="$PROJECT_DIR$/out/production/codeu_coding_assessment_2017/com/google/codeu/codingchallenge/NewTest$3.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/codeu_coding_assessment_2017/com/google/codeu/codingchallenge/NewTest.class" afterPath="$PROJECT_DIR$/out/production/codeu_coding_assessment_2017/com/google/codeu/codingchallenge/NewTest.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/google/codeu/codingchallenge/MyJSON.java" afterPath="$PROJECT_DIR$/src/com/google/codeu/codingchallenge/MyJSON.java" />
@@ -33,31 +32,6 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="375">
-      <file leaf-file-name="TestMain.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/google/codeu/codingchallenge/TestMain.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="53" column="0" selection-start-line="44" selection-start-column="0" selection-end-line="53" selection-end-column="0" />
-              <folding>
-                <element signature="e#0#2754#0" expanded="true" />
-                <element signature="imports" expanded="true" />
-                <element signature="class#1525:1858" expanded="false" />
-                <marker date="1492377531805" expanded="true" signature="1486:1860" placeholder="..." />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Tester.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/google/codeu/codingchallenge/Tester.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="31" column="0" selection-start-line="31" selection-start-column="0" selection-end-line="31" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="Test.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/google/codeu/codingchallenge/Test.java">
           <provider selected="true" editor-type-id="text-editor">
@@ -72,7 +46,7 @@
         <entry file="file://$PROJECT_DIR$/README.md">
           <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
             <state split_layout="SECOND">
-              <first_editor vertical-scroll-proportion="0.34322035">
+              <first_editor vertical-scroll-proportion="0.34033614">
                 <caret line="18" column="0" selection-start-line="18" selection-start-column="0" selection-end-line="18" selection-end-column="0" />
                 <folding />
               </first_editor>
@@ -85,32 +59,34 @@
         <entry file="file://$PROJECT_DIR$/src/com/google/codeu/codingchallenge/MyJSON.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="48" column="17" selection-start-line="48" selection-start-column="17" selection-end-line="48" selection-end-column="17" />
-              <folding />
+              <caret line="39" column="18" selection-start-line="39" selection-start-column="18" selection-end-line="39" selection-end-column="18" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="NewTest.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="NewTest.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/google/codeu/codingchallenge/NewTest.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.6486486">
-              <caret line="37" column="54" selection-start-line="37" selection-start-column="54" selection-end-line="37" selection-end-column="54" />
+            <state vertical-scroll-proportion="0.0">
+              <caret line="40" column="60" selection-start-line="40" selection-start-column="60" selection-end-line="40" selection-end-column="60" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="MyJSONParser.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="MyJSONParser.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/com/google/codeu/codingchallenge/MyJSONParser.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="118" column="72" selection-start-line="118" selection-start-column="72" selection-end-line="118" selection-end-column="72" />
+            <state vertical-scroll-proportion="0.2457627">
+              <caret line="152" column="36" selection-start-line="152" selection-start-column="36" selection-end-line="152" selection-end-column="36" />
               <folding>
-                <element signature="e#0#6211#0" expanded="true" />
+                <element signature="e#0#6804#0" expanded="true" />
                 <element signature="imports" expanded="true" />
-                <element signature="e#6133#6134#0" expanded="true" />
-                <element signature="e#6197#6198#0" expanded="true" />
+                <element signature="e#6723#6724#0" expanded="true" />
+                <element signature="e#6790#6791#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -145,16 +121,17 @@
         <option value="$PROJECT_DIR$/.gitignore" />
         <option value="$PROJECT_DIR$/src/com/google/codeu/codingchallenge/Tester.java" />
         <option value="$PROJECT_DIR$/src/com/google/codeu/codingchallenge/TestMain.java" />
+        <option value="$PROJECT_DIR$/src/com/google/codeu/codingchallenge/NewTest.java" />
         <option value="$PROJECT_DIR$/src/com/google/codeu/codingchallenge/MyJSON.java" />
         <option value="$PROJECT_DIR$/src/com/google/codeu/codingchallenge/MyJSONParser.java" />
-        <option value="$PROJECT_DIR$/src/com/google/codeu/codingchallenge/NewTest.java" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="952" />
-    <option name="width" value="976" />
-    <option name="height" value="1038" />
+    <option name="x" value="-9" />
+    <option name="y" value="-9" />
+    <option name="width" value="1938" />
+    <option name="height" value="1048" />
   </component>
   <component name="ProjectInspectionProfilesVisibleTreeState">
     <entry key="Project Default">
@@ -688,7 +665,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="952" y="0" width="976" height="1038" extended-state="0" />
+    <frame x="-9" y="-9" width="1938" height="1048" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -697,15 +674,15 @@
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3295325" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32383123" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3295325" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32356256" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3295325" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.26548672" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25026795" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3945885" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.39007893" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -753,40 +730,87 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/com/google/codeu/codingchallenge/MyJSONParser.java</url>
-          <line>91</line>
+          <line>96</line>
           <properties />
           <option name="timeStamp" value="1" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/com/google/codeu/codingchallenge/MyJSONParser.java</url>
-          <line>93</line>
+          <line>98</line>
           <properties />
           <option name="timeStamp" value="2" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/com/google/codeu/codingchallenge/MyJSON.java</url>
-          <line>44</line>
+          <line>49</line>
           <properties />
           <option name="timeStamp" value="11" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/com/google/codeu/codingchallenge/MyJSONParser.java</url>
-          <line>58</line>
+          <line>111</line>
           <properties />
-          <option name="timeStamp" value="18" />
+          <option name="timeStamp" value="28" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/com/google/codeu/codingchallenge/MyJSONParser.java</url>
+          <line>115</line>
+          <properties />
+          <option name="timeStamp" value="29" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/com/google/codeu/codingchallenge/MyJSONParser.java</url>
+          <line>124</line>
+          <properties />
+          <option name="timeStamp" value="33" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/com/google/codeu/codingchallenge/MyJSONParser.java</url>
+          <line>131</line>
+          <properties />
+          <option name="timeStamp" value="34" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/com/google/codeu/codingchallenge/MyJSONParser.java</url>
+          <line>122</line>
+          <properties />
+          <option name="timeStamp" value="35" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/com/google/codeu/codingchallenge/MyJSONParser.java</url>
+          <line>128</line>
+          <properties />
+          <option name="timeStamp" value="36" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/com/google/codeu/codingchallenge/MyJSONParser.java</url>
+          <line>130</line>
+          <properties />
+          <option name="timeStamp" value="37" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/com/google/codeu/codingchallenge/MyJSONParser.java</url>
+          <line>221</line>
+          <properties />
+          <option name="timeStamp" value="38" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/com/google/codeu/codingchallenge/MyJSONParser.java</url>
+          <line>223</line>
+          <properties />
+          <option name="timeStamp" value="39" />
         </line-breakpoint>
       </breakpoints>
-      <option name="time" value="26" />
+      <option name="time" value="40" />
     </breakpoint-manager>
     <watches-manager>
       <configuration name="Application">
         <watch expression="in" language="JAVA" custom="" />
         <watch expression="in.charAt(start)" language="JAVA" custom="" />
         <watch expression="in.charAt(start+1)" language="JAVA" custom="" />
-        <watch expression="left&gt;=0" language="JAVA" custom="" />
-        <watch expression="right &lt; positionOfBrackets.size()" language="JAVA" custom="" />
-        <watch expression="positionOfBrackets.size()" language="JAVA" custom="" />
         <watch expression="myJSON" language="JAVA" custom="" />
+        <watch expression="in.substring(preComma, nextComma).substring(in.indexOf(&quot;:&quot;)" language="JAVA" custom="" />
+        <watch expression="in.substring(preComma, nextComma)" language="JAVA" custom="" />
       </configuration>
     </watches-manager>
   </component>
@@ -800,10 +824,10 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="e#0#6211#0" expanded="true" />
+            <element signature="e#0#6804#0" expanded="true" />
             <element signature="imports" expanded="true" />
-            <element signature="e#6133#6134#0" expanded="true" />
-            <element signature="e#6197#6198#0" expanded="true" />
+            <element signature="e#6723#6724#0" expanded="true" />
+            <element signature="e#6790#6791#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -888,7 +912,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="18" column="36" selection-start-line="18" selection-start-column="36" selection-end-line="18" selection-end-column="36" />
-          <folding />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -897,10 +923,10 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="e#0#6211#0" expanded="true" />
+            <element signature="e#0#6804#0" expanded="true" />
             <element signature="imports" expanded="true" />
-            <element signature="e#6133#6134#0" expanded="true" />
-            <element signature="e#6197#6198#0" expanded="true" />
+            <element signature="e#6723#6724#0" expanded="true" />
+            <element signature="e#6790#6791#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -977,7 +1003,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="18" column="36" selection-start-line="18" selection-start-column="36" selection-end-line="18" selection-end-column="36" />
-          <folding />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -986,10 +1014,10 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="22" column="31" selection-start-line="22" selection-start-column="31" selection-end-line="22" selection-end-column="31" />
           <folding>
-            <element signature="e#0#6211#0" expanded="true" />
+            <element signature="e#0#6804#0" expanded="true" />
             <element signature="imports" expanded="true" />
-            <element signature="e#6133#6134#0" expanded="true" />
-            <element signature="e#6197#6198#0" expanded="true" />
+            <element signature="e#6723#6724#0" expanded="true" />
+            <element signature="e#6790#6791#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -1059,7 +1087,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -1068,10 +1098,10 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="e#0#6211#0" expanded="true" />
+            <element signature="e#0#6804#0" expanded="true" />
             <element signature="imports" expanded="true" />
-            <element signature="e#6133#6134#0" expanded="true" />
-            <element signature="e#6197#6198#0" expanded="true" />
+            <element signature="e#6723#6724#0" expanded="true" />
+            <element signature="e#6790#6791#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -1229,7 +1259,7 @@
       </provider>
       <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
         <state split_layout="SECOND">
-          <first_editor vertical-scroll-proportion="0.34322035">
+          <first_editor vertical-scroll-proportion="0.34033614">
             <caret line="18" column="0" selection-start-line="18" selection-start-column="0" selection-end-line="18" selection-end-column="0" />
             <folding />
           </first_editor>
@@ -1237,32 +1267,34 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/google/codeu/codingchallenge/NewTest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="40" column="60" selection-start-line="40" selection-start-column="60" selection-end-line="40" selection-end-column="60" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/com/google/codeu/codingchallenge/MyJSON.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="48" column="17" selection-start-line="48" selection-start-column="17" selection-end-line="48" selection-end-column="17" />
-          <folding />
+          <caret line="39" column="18" selection-start-line="39" selection-start-column="18" selection-end-line="39" selection-end-column="18" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/google/codeu/codingchallenge/MyJSONParser.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="118" column="72" selection-start-line="118" selection-start-column="72" selection-end-line="118" selection-end-column="72" />
+        <state vertical-scroll-proportion="0.2457627">
+          <caret line="152" column="36" selection-start-line="152" selection-start-column="36" selection-end-line="152" selection-end-column="36" />
           <folding>
-            <element signature="e#0#6211#0" expanded="true" />
+            <element signature="e#0#6804#0" expanded="true" />
             <element signature="imports" expanded="true" />
-            <element signature="e#6133#6134#0" expanded="true" />
-            <element signature="e#6197#6198#0" expanded="true" />
+            <element signature="e#6723#6724#0" expanded="true" />
+            <element signature="e#6790#6791#0" expanded="true" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/google/codeu/codingchallenge/NewTest.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.6486486">
-          <caret line="37" column="54" selection-start-line="37" selection-start-column="54" selection-end-line="37" selection-end-column="54" />
-          <folding />
         </state>
       </provider>
     </entry>
