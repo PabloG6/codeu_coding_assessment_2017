@@ -14,12 +14,8 @@
 
 package com.google.codeu.codingchallenge;
 
-import com.sun.xml.internal.ws.policy.privateutil.PolicyUtils;
-import sun.rmi.runtime.Log;
-
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Stack;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -68,6 +64,7 @@ final class MyJSONParser implements JSONParser {
                 colons.add(i);
             }
 
+
             if (var == ',') {
                 commas.add(i);
             }
@@ -92,7 +89,7 @@ final class MyJSONParser implements JSONParser {
     private static String matcher(String key, String in) throws IOException {
         Pattern pattern = Pattern.compile(key);
         Matcher match = pattern.matcher(in);
-        System.out.println(in);
+
         if (match.find()) {
             return match.group().substring(1, match.group().length() - 1);
         }
@@ -105,41 +102,52 @@ final class MyJSONParser implements JSONParser {
         in = in.substring(start);
 
 
-        //now get to the deepest level of json
-
 
         //find first colon
         setColonPositions();
-        String key = matcher(key_regex, in);
-        String value = null;
-        //if a string value is not presetn but no colon the json object is invalid.
-        if (key == null && in.contains(":")) {
-            throw new IOException("This is not a valid json object");
-        }
+        setCommaPositions(nextComma);
+        if (commas.size() != 0) {
+            nextComma = commas.get(0);
 
+            while (commaCount < commas.size()) {
 
-        //if it's not a json then do the other thing
-        nextComma = commas.get(0);
-        while (commaCount < commas.size()) {
-
-            if (in.charAt(colonPosition + 1) == '{') {
-                myJSON.setObject(key, deepJSON(in.substring(colonPosition)));
-            } else {
-
-                value = matcher(key_regex, in.substring(preComma+1, nextComma).substring(in.indexOf(":")));
+                int val = eatSpaces(colonPosition + 1, in);
                 setColonPositions();
                 setCommaPositions(nextComma);
-                myJSON.setString(key, value);
-            }
+                if (in.substring(val).charAt(0) == '{') {
+                    String key = matcher(key_regex, in.substring(val));
+                    myJSON.setObject(key, deepJSON(in.substring(val, in.indexOf('}') + 1)));
 
+
+                } else {
+                    String key = matcher(key_regex, in);
+                    if (key == null)
+                        throw new IOException("Key is null");
+                    in = in.substring(in.indexOf(key));
+
+                    String object = matcher(key_regex, in);
+                    if (object == null) {
+                        throw new IOException("Object is null");
+                    }
+
+                    in = in.substring(in.indexOf(object));
+
+                    myJSON.setString(key, object);
+
+
+                }
+
+            }
         }
+
         return myJSON;
     }
 
     private void setColonPositions() {
+        if (colonCount < colons.size())
+            colonPosition = colons.get(colonCount);
+        colonCount++;
 
-
-        colonPosition = colons.get(colonCount+1);
     }
 
     /**
@@ -151,6 +159,7 @@ final class MyJSONParser implements JSONParser {
 
     private MyJSON deepJSON(String in) throws IOException {
         String key = findKey(0, in);
+        Log.i("Deep JSON", in);
         MyJSON object = new MyJSON();
         if (key == null) {
             throw new IOException("This is not a valid json object");
@@ -168,22 +177,22 @@ final class MyJSONParser implements JSONParser {
         }
     }
 
-    private String findObject(int start, String in) throws IOException {
-        return matcher(key_regex, in.substring(start));
-    }
-
-    private String jsonify(int start, String in, int num_of_commas) throws IOException {
-        if (in.charAt(start + 1) == '{') {
-            System.out.println(in);
-            return jsonify(start, in.substring(start + 1), num_of_commas + 1);
-        }
-        jsonify(in);
-        return null;
-    }
-
     private int eatSpaces(String in) throws IOException {
         int val = 0;
         for (int i = 0; i < in.length(); i++) {
+            val = i;
+            if (in.charAt(i) != ' ') {
+                return val;
+            }
+
+
+        }
+        return val;
+    }
+
+    private int eatSpaces(int start, String in) throws IOException {
+        int val = 0;
+        for (int i = start; i < in.length(); i++) {
             val = i;
             if (in.charAt(i) != ' ') {
                 return val;
@@ -201,33 +210,21 @@ final class MyJSONParser implements JSONParser {
     }
 
 
-    //simple validation check to see if a key contains a value;
-    private void simpleValid(String in) throws IOException {
-
-        String key = matcher(key_regex, in);
-
-        //if a string value is not present but no colon the json object is invalid.
-        if (key == null && !in.contains(":")) {
-            throw new IOException("This is not a valid json object");
-        }
-
-
-    }
-
     /**
      * set the previous and nextCommaPositions
      */
     private void setCommaPositions(int next) {
-
-        this.preComma = next;
-        this.nextComma = commas.get(commaCount+1);
         commaCount++;
+        this.preComma = next;
+        if (commaCount < commas.size())
+            this.nextComma = commas.get(commaCount);
+
     }
 
     //prints log statements for easier debugging
     public static class Log {
         public static void i(String key, String value) {
-            System.out.printf("%s , %s \n", key, value);
+            System.out.printf("%s, %s \n", key, value);
         }
 
     }
