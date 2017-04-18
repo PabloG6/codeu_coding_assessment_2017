@@ -10,9 +10,6 @@ import java.io.IOException;
 public class NewTest {
     public static void main(String[] args) throws IOException {
         final Tester tests = new Tester();
-        MyJSONParser parser = new MyJSONParser();
-         MyJSON obj = parser.parse("{\"name\":\"John\",\"age\":\"thirty\", \"cars\": { \"car1\":\"Ford\",\"car2\":" +
-                 "\"BMW\", \"car3\":\"Fiat\"}}");
 
 
 
@@ -48,6 +45,7 @@ public class NewTest {
                         "\"BMW\", \"car3\":\"Fiat\"}}");
                 MyJSONParser.Log.i("name", obj.getString("name"));
                 MyJSONParser.Log.i("age", obj.getString("age"));
+                MyJSONParser.Log.i("cars", obj.getObject("cars").getString("car1"));
             }
         });
 

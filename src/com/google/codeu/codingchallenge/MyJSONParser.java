@@ -14,6 +14,8 @@
 
 package com.google.codeu.codingchallenge;
 
+import com.sun.xml.internal.ws.policy.privateutil.PolicyUtils;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Stack;
@@ -109,31 +111,44 @@ final class MyJSONParser implements JSONParser {
         if (commas.size() != 0) {
             nextComma = commas.get(0);
 
-            while (commaCount < commas.size()) {
+            while (in.contains(":")) {
 
-                int val = eatSpaces(colonPosition + 1, in);
+
                 setColonPositions();
                 setCommaPositions(nextComma);
-                if (in.substring(val).charAt(0) == '{') {
-                    String key = matcher(key_regex, in.substring(val));
-                    myJSON.setObject(key, deepJSON(in.substring(val, in.indexOf('}') + 1)));
-
+                if(!in.contains(":")) {
+                  //do something
+                }
+                int val = eatSpaces(in.indexOf(":"), in);
+                if (in.substring(val+1).charAt(1) == '{') {
+                    String key = matcher(key_regex, in);
+                    myJSON.setObject(key, deepJSON(key, in.substring(val+1, in.indexOf('}') + 1)));
+in = in.substring(val+1);
 
                 } else {
-                    String key = matcher(key_regex, in);
-                    if (key == null)
-                        throw new IOException("Key is null");
-                    in = in.substring(in.indexOf(key));
+                    try {
+                        String key = matcher(key_regex, in);
+                        if (key == null)
+                            throw new IOException("Key is null");
+                        in = in.substring(in.indexOf(":"));
 
-                    String object = matcher(key_regex, in);
-                    if (object == null) {
-                        throw new IOException("Object is null");
+                        String object = matcher(key_regex, in);
+                        if (object == null) {
+                            throw new IOException("Object is null");
+                        }
+
+                        in = in.substring(object.length()+3);
+                         val = eatSpaces(0, in);
+                        in = in.substring(val);
+                        if(in.charAt(0) != ',' & in.charAt(0) !='}') {
+                            System.out.println("final in " +in);
+                            throw new IOException("object not separated by comma. Invalid json");
+                        }
+
+                        myJSON.setString(key, object);
+                    } catch (StringIndexOutOfBoundsException ex) {
+                        ex.printStackTrace();
                     }
-
-                    in = in.substring(in.indexOf(object));
-
-                    myJSON.setString(key, object);
-
 
                 }
 
@@ -157,23 +172,39 @@ final class MyJSONParser implements JSONParser {
      * @return MyJSON object
      */
 
-    private MyJSON deepJSON(String in) throws IOException {
-        String key = findKey(0, in);
-        Log.i("Deep JSON", in);
+    private MyJSON deepJSON(String key, String in) throws IOException {
+;
         MyJSON object = new MyJSON();
-        if (key == null) {
-            throw new IOException("This is not a valid json object");
+         if (in.charAt(in.indexOf(":")) == '{') {
+             String key1 = findKey(0, in);
+             in = in.substring(key.length()+3);
+             Log.i("Deep JSON", in);
+             return object.setObject(key1, deepJSON(key1, in.substring(in.indexOf(":") + 1, in.indexOf("}") + 1)));
+         }
 
-        } else if (in.charAt(in.indexOf(":")) == '{')
-            return object.setObject(key, deepJSON(in.substring(in.indexOf(":") + 1)));
 
         else {
             //if the next object is not a { but a string create a json object
-            String value = matcher(key, in);
-            if (value == null) {
-                throw new IOException("Not a valid json object");
+
+            //if the string in question contains commas, split it into an array of json objects
+            if(in.contains(",")) {
+                MyJSON json = new MyJSON();
+               String[] key_value_pairs = in.split(",");
+                for (int i = 0; i < key_value_pairs.length; i++) {
+                    System.out.println(key_value_pairs[i]);
+                    String key2 = matcher(key_regex, key_value_pairs[i]);
+                    String value = matcher(key_regex, key_value_pairs[i].substring(key_value_pairs[i].indexOf(":")));
+                    System.out.printf("%s %s \n", key, value);
+                    if(myJSON!=null) {
+                        object.setString(key2,  value);
+                    }
+                }
+
+
+
             }
-            return object.setString(key, value);
+
+             return object;
         }
     }
 
@@ -214,10 +245,10 @@ final class MyJSONParser implements JSONParser {
      * set the previous and nextCommaPositions
      */
     private void setCommaPositions(int next) {
-        commaCount++;
         this.preComma = next;
         if (commaCount < commas.size())
             this.nextComma = commas.get(commaCount);
+        commaCount++;
 
     }
 

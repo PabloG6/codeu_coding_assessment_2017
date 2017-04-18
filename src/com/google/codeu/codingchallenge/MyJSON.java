@@ -16,6 +16,7 @@ package com.google.codeu.codingchallenge;
 
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.jar.Pack200;
 
 final class MyJSON implements JSON {
     private HashMap<String, String> stringObjects = new HashMap<>();
@@ -38,7 +39,9 @@ final class MyJSON implements JSON {
 
     @Override
     public MyJSON setObject(String name, JSON value) {
+
         jsonObjects.put(name, (MyJSON) value);
+
         return this;
     }
 
@@ -67,5 +70,10 @@ final class MyJSON implements JSON {
     public void getStrings(Collection<String> names) {
         // TODO: implement this
         //// TODO: 4/14/2017 implement recursion that breaks out when object being returned will be null
+    }
+
+    public MyJSON setObject(String key, MyJSON json, String key2) {
+
+        return this;
     }
 }
