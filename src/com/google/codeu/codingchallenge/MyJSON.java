@@ -24,18 +24,18 @@ final class MyJSON implements JSON {
     String name;
     Object value;
     String val;
-    JSON jsonValue;
+    MyJSON jsonValue;
 
     @Override
-    public JSON getObject(String name) {
+    public MyJSON getObject(String name) {
         // TODO: implement this
         return jsonValue;
     }
 
     @Override
-    public JSON setObject(String name, JSON value) {
+    public MyJSON setObject(String name, JSON value) {
         this.name = name;
-        this.jsonValue = value;
+        this.jsonValue = (MyJSON) value;
         return this;
     }
 
@@ -46,7 +46,7 @@ final class MyJSON implements JSON {
     }
 
     @Override
-    public JSON setString(String name, String value) {
+    public MyJSON setString(String name, String value) {
         // TODO: implement this
         this.name = name;
         this.val = value;

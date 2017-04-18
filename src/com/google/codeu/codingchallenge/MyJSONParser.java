@@ -14,37 +14,32 @@
 
 package com.google.codeu.codingchallenge;
 
-import com.sun.deploy.util.StringUtils;
+import com.sun.xml.internal.ws.policy.privateutil.PolicyUtils;
+import sun.rmi.runtime.Log;
 
 import java.io.IOException;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Stack;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 final class MyJSONParser implements JSONParser {
-    ArrayList<BracketPositions> positionOfBrackets;
     private static final String key_regex = "(\"[\\w\\s ]+\")";
     private MyJSON myJSON = new MyJSON();
-    
+    ArrayList<Integer> bracketPositions = new ArrayList<>();
+
+    //keep position of commas and colons
+    ArrayList<Integer> commas = new ArrayList<>();
+    ArrayList<Integer> colons = new ArrayList<>();
 
     @Override
     public MyJSON parse(String in) throws IOException {
 
         //create boolean array to store position of curly braces.
         //true means "{", false means "}"
-        positionOfBrackets = new ArrayList<>();
-        //do a check of the string that's been implemented by pushing value on stack
-
-        if (isBalanced(in, positionOfBrackets)) {
-            //start parsing
-
-
-            //createDictionary method
-            createDictionary(in);
-
-
+        if (isBalanced(in, bracketPositions)) {
+            jsonify(in);
             return myJSON;
         } else {
 
@@ -58,24 +53,34 @@ final class MyJSONParser implements JSONParser {
      * @param positionOfBrackets store the position of the brackets for quickeer look up
      * @return return boolean if expression is unbalanced
      */
-    private boolean isBalanced(String in, ArrayList<BracketPositions> positionOfBrackets) throws IOException {
+
+
+    private boolean isBalanced(String in, ArrayList positionOfBrackets) throws IOException {
         Stack<Character> brackets = new Stack<>();
         for (int i = 0; i < in.length(); i++) {
             char var = in.charAt(i);
+            if (var == ':') {
+                colons.add(i);
+            }
+
+            if (var == ',') {
+                commas.add(i);
+            }
             if (var == '{') {
                 brackets.push(var);
-                positionOfBrackets.add(new BracketPositions(i, true));
+
             } else if (var == '}') {
 
-                positionOfBrackets.add(new BracketPositions(i, false));
+
                 if (brackets.isEmpty()) return false;
-                if (brackets.pop() != '{') {
-                    return false;
-                }
+                if (brackets.pop() != '{') return false;
 
 
             }
         }
+
+        //if commas size less than colons size by more than one, return false;
+
         return brackets.isEmpty();
     }
 
@@ -89,69 +94,120 @@ final class MyJSONParser implements JSONParser {
         return null;
     }
 
-    /**
-     * @return subObject to parse
-     */
-    private String subObject(int start, String in) throws IOException {
-        if (start != -1 && in.charAt(start + 1) == '{') {
-            parse(in.substring(start + 1, in.length() - 1));
 
+    private MyJSON jsonify(String in) throws IOException {
+        int start = eatSpaces(in);
+        in = in.substring(start);
+
+
+        //now get to the deepest level of json
+
+
+        //find first colon
+        int colonPosition = in.indexOf(":");
+        String key = matcher(key_regex, in);
+        String value = null;
+
+        //if a string value is not presetn but no colon the json object is invalid.
+        if (key == null && !in.contains(":")) {
+            throw new IOException("This is not a valid json object");
         }
-        return in;
+
+
+        //if it's not a json then
+        if (in.charAt(colonPosition + 1) == '{') {
+            myJSON.setObject(key, deepJSON(in.substring(colonPosition)));
+        } else {
+            value = matcher(key_regex, in.substring(colonPosition+1, in.indexOf(",")));
+            myJSON.setString(key, value);
+        }
+
+
+        return myJSON;
     }
 
     /**
-     * @param in JSON Object
-     * @throws IOException
+     * find next json object in string
+     *
+     * @param in substring to check for json object
+     * @return MyJSON object
      */
-    private void createDictionary(String in) throws IOException {
-        //count from middle out to get deepest json object
 
-        int right = positionOfBrackets.size() / 2;
-        int left;
-        left = positionOfBrackets.size() / 2 - 1;
+    private MyJSON deepJSON(String in) throws IOException {
+        String key = findKey(0, in);
+        System.out.println("Deep JSON "+ in);
+        MyJSON object = new MyJSON();
+        if (key == null) {
+            throw new IOException("This is not a valid json object");
 
-        for (; left >= 0 && right < positionOfBrackets.size(); left--, right++) {
-            int left_pos = positionOfBrackets.get(left).position;
-            int right_pos = positionOfBrackets.get(right).position;
-            if (positionOfBrackets.get(left).whichBracket && !positionOfBrackets.get(right).whichBracket) {
-                String val = in.substring(left_pos + 1, right_pos);
-                System.out.println(val);
-                String[] values = val.split(",");
+        } else if (in.charAt(in.indexOf(":")) == '{')
+            return object.setObject(key, deepJSON(in.substring(in.indexOf(":"+1))));
 
-                String key = null;
-                String value = null;
-                for (int i = 0; i < values.length; i++) {
-
-                    //get individual dictionary object from values split based on ,
-                    String dictionary = values[i];
-                    key = matcher(key_regex, dictionary.split(":")[0]);
-                    value = matcher(key_regex, dictionary.split(":")[1]);
-                }
-
-                if (key == null && value == null) {
-                    throw new IOException("This is not a valid json object");
-                }
-
-                //// TODO: 4/16/2017 delete this
-                System.out.println("Key value: " + key);
-                System.out.println("Object value: " + value);
-                myJSON.setString(key, value);
+        else {
+            //if the next object is not a { but a string create a json object
+            String value = matcher(key, in);
+            if(value == null) {
+                throw new IOException("Not a valid json object");
             }
+            return object.setString(key, value);
         }
     }
 
-    /**
-     * store the type of bracket and the bracket position in this custom object for easy lookup
-     */
-
-    private final static class BracketPositions {
-        int position;
-        boolean whichBracket;
-
-        public BracketPositions(int position, boolean whichBracket) {
-            this.position = position;
-            this.whichBracket = whichBracket;
-        }
+    private String findObject(int start, String in) throws IOException {
+        return matcher(key_regex, in.substring(start));
     }
+
+    private String jsonify(int start, String in, int num_of_commas) throws IOException {
+        if (in.charAt(start + 1) == '{') {
+            System.out.println(in);
+            return jsonify(start, in.substring(start + 1), num_of_commas + 1);
+        }
+        jsonify(in);
+        return null;
+    }
+
+    private int eatSpaces(String in) throws IOException {
+        int val = 0;
+        for (int i = 0; i < in.length(); i++) {
+            val = i;
+            if (in.charAt(i) != ' ') {
+                return val;
+            }
+
+
+        }
+        return val;
+    }
+
+
+    private String findKey(int start, String in) throws IOException {
+
+        return matcher(key_regex, in.substring(start));
+    }
+
+
+    //simple validation check to see if a key contains a value;
+    private void simpleValid(String in) throws IOException {
+        int colonPosition = in.indexOf(":");
+        String key = matcher(key_regex, in);
+
+        //if a string value is not presetn but no colon the json object is invalid.
+        if (key == null && !in.contains(":")) {
+            throw new IOException("This is not a valid json object");
+        }
+
+
+    }
+
+
+    //prints log statements for easier debugging
+    public static class Log {
+        public static void i(String key, String value) {
+            System.out.printf("%s , %s", key, value);
+        }
+
+    }
+
+
 }
+
