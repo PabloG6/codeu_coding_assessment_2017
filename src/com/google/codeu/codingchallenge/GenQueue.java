@@ -7,52 +7,59 @@ import java.util.*;
  */
 
 
-class GenQueue<E extends Comparable<? super E>> {
-    public GenQueue(GenQueue<E> commas) {
-        this.list = new LinkedList<>(commas.list);
+class GenQueue {
+
+    public GenQueue(GenQueue commas) {
+        this.list = new LinkedList<Integer>(commas.list);
     }
+
     public GenQueue() {
 
     }
-    public static <E extends Comparable<E>> int compareTo(E x, E y) {
 
-        if(x == null)
-            return -(y.compareTo(x));
+    public static <Integer extends Comparable<Integer>> int compareTo(Integer x, Integer y) {
+
+        if (x == null)
+            return (y.compareTo(x));
 
         return x.compareTo(y);
 
     }
-    private LinkedList<E> list = new LinkedList<E>();
-    public void enqueue(E item) {
+
+    private LinkedList<Integer> list = new LinkedList<Integer>();
+
+    public void enqueue(Integer item) {
         list.addLast(item);
     }
-    public E dequeue() {
+
+    public synchronized Integer dequeue() {
         return list.poll();
     }
+
     public boolean hasItems() {
         return !list.isEmpty();
     }
+
     public int size() {
         return list.size();
     }
-    public void addItems(GenQueue<? extends E> q) {
-        while (q.hasItems()) list.addLast(q.dequeue());
-    }
 
-    public E findFirstLarge(E k) {
-        E val = null;
+
+    public Integer findFirstLarge(Integer k) {
         for (int i = 0; i < list.size(); i++) {
-
+            if(k > list.get(i)) {
+                return list.get(i);
+            }
         }
-        return val;
+        return -1;
     }
 
-    public E peek() {
+    public Integer peek() {
         return list.peek();
     }
 
     public boolean isEmpty() {
-        return !(list.size()>0);
+        return !(list.size() > 0);
     }
 
 

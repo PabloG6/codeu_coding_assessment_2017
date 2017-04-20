@@ -14,15 +14,45 @@
 
 package com.google.codeu.codingchallenge;
 
+import java.util.ArrayList;
 import java.util.Map;
 import java.util.HashMap;
 
 final class Tester {
+    public static class TestMapper {
+        Test test;
+        String testValue;
+
+        public Test getTest() {
+            return test;
+        }
+
+        public void setTest(Test test) {
+            this.test = test;
+        }
+
+        public String getTestValue() {
+            return testValue;
+        }
+
+        public void setTestValue(String testValue) {
+            this.testValue = testValue;
+        }
+
+        public TestMapper(Test test, String testValue) {
+            this.test = test;
+            this.testValue = testValue;
+        }
+
+
+    }
 
     private final Map<String, Test> tests = new HashMap<>();
+    private final ArrayList<TestMapper> testMapperArrayList = new ArrayList<>();
 
     public void add(String name, Test test) {
         tests.put(name, test);
+        testMapperArrayList.add(new TestMapper(test, name));
     }
 
     public void run(JSONFactory factory) {
@@ -35,5 +65,15 @@ final class Tester {
                 System.out.format("FAIL : Test %s (%s)\n", test.getKey(), ex.toString());
             }
         }
+//        System.out.println("Array List ordering");
+//        for (TestMapper mapper : testMapperArrayList) {
+//            System.out.format("PASS : Test %s\n", mapper.getTestValue());
+//            try {
+//                mapper.getTest().run(factory);
+//            } catch (Exception ex) {
+//                System.out.format("FAIL : Test %s (%s)\n", mapper.getTestValue(), ex.toString());
+//             ex.printStackTrace();
+//            }
+//        }
     }
 }

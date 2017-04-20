@@ -24,15 +24,11 @@ import java.util.regex.Pattern;
 final class MyJSONParser implements JSONParser {
     private static final String key_regex = "(\"[\\w\\s ]+\")";
     private JSON json = new MyJSON();
-    GenQueue<Integer> frontBrace = new GenQueue<>();
+    GenQueue frontBrace = new GenQueue();
     Stack<Integer> backBrace = new Stack<>();
 
-    private int preComma = 1;
-    private int nextComma;
-    int commaCount;
-
     //keep position of commas and colons
-    GenQueue<Integer> commas = new GenQueue<>();
+    GenQueue commas = new GenQueue();
 
     @Override
     public JSON parse(String in) throws IOException {
@@ -98,56 +94,6 @@ final class MyJSONParser implements JSONParser {
     }
 
 
-    private JSON jsonify(String in) throws IOException {
-        int start = eatSpaces(in);
-        in = in.substring(start);
-
-
-        //find first colon
-
-
-        while (in.contains(":")) {
-
-            //start to the right of colon
-            int val = eatSpaces(in.indexOf(":") + 1, in);
-
-            if (in.substring(val).charAt(0) == '{') {
-                String key = matcher(key_regex, in);
-                in = in.substring(val + 1);
-                json.setObject(key, deepJSON(in.substring(0, in.indexOf('}') + 1)));
-
-
-            } else {
-                try {
-                    String key = matcher(key_regex, in);
-                    if (key == null)
-                        throw new IOException("Key is null");
-
-                    in = in.substring(in.indexOf(":"));
-                    String object = matcher(key_regex, in);
-                    if (object == null) {
-                        throw new IOException("Object is null");
-                    }
-
-                    in = in.substring(object.length() + 3);
-                    val = eatSpaces(0, in);
-                    in = in.substring(val);
-                    if (in.charAt(0) != ',' & in.charAt(0) != '}') {
-
-                    }
-
-                    json.setString(key, object);
-                } catch (StringIndexOutOfBoundsException ex) {
-                    ex.printStackTrace();
-                }
-
-            }
-
-        }
-
-
-        return json;
-    }
 
 
     /**
@@ -156,79 +102,6 @@ final class MyJSONParser implements JSONParser {
      * @param in substring to check for json object
      * @return MyJSON object
      */
-
-    private MyJSON deepJSON(String in) throws IOException {
-        ;
-        MyJSON object = new MyJSON();
-        int start = eatSpaces(in.indexOf(":") + 1, in);
-        if (in.charAt(in.substring(start).charAt(0)) == '{') {
-            String key1 = findKey(0, in);
-
-            //modify the string to remove the key found
-            in = in.substring(key1.length() + 3);
-            return object.setObject(key1, deepJSON(in.substring(in.indexOf(":") + 1, in.indexOf("}") + 1)));
-        } else {
-            //if the next object is not a { but a string create a json object
-
-            //if the string in question contains commas, split it into an array of json objects
-            if (in.contains(",")) {
-                //find next two commas
-                int first = 0;
-                int second = in.indexOf(',');
-
-                while (first != -1 && second != -1) {
-                    System.out.printf("first: %d, second: %d \n", first, second);
-                    String s = in.substring(first + 1, second);
-                    first = in.indexOf(',', first + 1);
-                    second = in.indexOf(',', second + 1);
-                    if (s.contains("{")) {
-                        String key2 = matcher(key_regex, in);
-                        object.setObject(key2, deepJSON(in.substring(first).substring(in.indexOf(":") + 1, in.indexOf('}'))));
-                    }
-                    System.out.println(s);
-
-                }
-
-
-            }
-
-            return object;
-        }
-
-    }
-
-    private int eatSpaces(String in) throws IOException {
-        int val = 0;
-        for (int i = 0; i < in.length(); i++) {
-            val = i;
-            if (in.charAt(i) != ' ') {
-                return val;
-            }
-
-
-        }
-        return val;
-    }
-
-    private int eatSpaces(int start, String in) throws IOException {
-        int val = 0;
-        for (int i = start; i < in.length(); i++) {
-            val = i;
-            if (in.charAt(i) != ' ') {
-                return val;
-            }
-
-
-        }
-        return val;
-    }
-
-
-    private String findKey(int start, String in) throws IOException {
-
-        return matcher(key_regex, in.substring(start));
-    }
-
 
     /**
      * set the previous and nextCommaPositions
@@ -244,7 +117,7 @@ final class MyJSONParser implements JSONParser {
         JSON json = new MyJSON();
 
 
-        GenQueue<Integer> commaQueue = new GenQueue<>(commas);
+        GenQueue commaQueue = new GenQueue(commas);
 
 
         //find and replace curly braces
@@ -252,12 +125,45 @@ final class MyJSONParser implements JSONParser {
 
         if (in.contains("{") && !frontBrace.isEmpty() && !backBrace.isEmpty()) {
             int front = frontBrace.dequeue();
-            int back = backBrace.pop();
-            //split the string based on first square brace
+            int back;
+            Matcher bBrace = backBracePatternMatcher(in.substring(front));
+            if(bBrace!=null) {
+                //find the key to the left of the front brace
+
+                String key = matcher(key_regex, parseObject);
+                Object remove = bBrace.start()+front;
+                back = (int) remove;
+
+                backBrace.remove(remove);
+                StringBuilder builder = new StringBuilder(in);
+                builder.setCharAt(front, '[');
+                builder.setCharAt(back, ']');
+                in = builder.toString();
+
+                json.setObject(key, testDeepJSON(in, in.substring(front, bBrace.end()+front)));
+
+            } else {
+                 back = backBrace.pop();
+
+                StringBuilder builder = new StringBuilder(in);
+                builder.setCharAt(front, '[');
+                builder.setCharAt(back, ']');
+                in = builder.toString();
+
+            }
+            //do this to prevent stringoutofboundsexception
+
+            /*if the value after front at any point in time is a back curly brace followed by a comma, then search for t
+              the last value in the back curly brace that comes after a comma and pass it again
+             */
             StringBuilder builder = new StringBuilder(in);
             builder.setCharAt(front, '[');
             builder.setCharAt(back, ']');
             in = builder.toString();
+
+
+            //split the string based on first square brace
+          ;
 
             //this may have multiple json objects so split by comma and set values
             String split[] = parseObject.split(",");
@@ -269,6 +175,7 @@ final class MyJSONParser implements JSONParser {
                 if(!s.contains("{")) {
 
                     String key = matcher(key_regex, s);
+                    if(key == null) throw new IOException("The key for the value is null");
                     String value = matcher(key_regex, s.substring(key.length()));
                     json.setString(key, value);
                 } else {
@@ -278,7 +185,6 @@ final class MyJSONParser implements JSONParser {
 
                 }
             }
-
 
             return json;
 
@@ -297,7 +203,19 @@ final class MyJSONParser implements JSONParser {
                 throw new IOException("Value is empty for this key");
             json.setString(key, value);
         }
+
+
         return json;
+    }
+
+    private Matcher backBracePatternMatcher(String in) {
+        String back_brace_end = "((}[\\s]+,)|(},))";
+        Pattern pattern = Pattern.compile(back_brace_end);
+        Matcher match = pattern.matcher(in);
+        if(match.find()) {
+            return match;
+        }
+        return null;
     }
 
 
