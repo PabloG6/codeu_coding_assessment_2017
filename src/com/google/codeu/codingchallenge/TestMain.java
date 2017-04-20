@@ -39,7 +39,7 @@ final class TestMain {
 //                Asserts.isEqual(objects.size(), 0);
 //            }
 //        });
-
+//
 //        tests.add("Test 1", new Test() {
 //            @Override
 //            public void run(JSONFactory factory) throws Exception {
@@ -54,7 +54,7 @@ final class TestMain {
 //            @Override
 //            public void run(JSONFactory factory) throws Exception {
 //
-//                final JSONParser parser = factory.parser();
+//                final JSONParser parser = new MyJSONParser();
 //                final JSON obj = parser.parse("{ \"name\":{\"first\":\"sam\", \"last\":\"doe\" } }");
 //
 //                final JSON nameObj = obj.getObject("name");
@@ -64,9 +64,9 @@ final class TestMain {
 //                Asserts.isEqual("doe", nameObj.getString("last"));
 //            }
 //        });
-
-
-
+//
+//
+//
 //        tests.add("Level 3 Json Test", new Test()
 //        {
 //            @Override
@@ -93,7 +93,7 @@ final class TestMain {
 //            }
 //        });
 //
-//      tests.add("Level 5 JSON test", new Test() {
+//      tests.add("Level 6 JSON test", new Test() {
 //            @Override
 //            public void run(JSONFactory factory) throws Exception {
 //                final MyJSONParser parser = new MyJSONParser();
@@ -108,7 +108,7 @@ final class TestMain {
 //
 //            }
 //        });
-        tests.add("Level 5 JSON Test, testing for correct number of commas", new Test() {
+        tests.add("Level 7 JSON Test, testing for correct number of commas", new Test() {
             @Override
             public void run(JSONFactory factory) throws Exception {
                 MyJSONParser jsonParser = new MyJSONParser();
@@ -117,17 +117,17 @@ final class TestMain {
             }
         });
 
-        tests.add("Level 6 JSON Test", new Test() {
-            @Override
-            public void run(JSONFactory factory) throws Exception {
-                MyJSONParser parser = new MyJSONParser();
-                final JSON obj = (parser.parse("{ \"name\":{\"first\":\"sam\", \"last\":\"doe\"} ,\"places\":{\"country\":\"Jamaica\"}}"));
-                Asserts.isEqual("sam", obj.getObject("name").getString("first"));
-            }
-        });
+//        tests.add("Level 8 JSON Test", new Test() {
+//            @Override
+//            public void run(JSONFactory factory) throws Exception {
+//                MyJSONParser parser = new MyJSONParser();
+//                final JSON obj = (parser.parse("{ \"name\":{\"first\":\"sam\", \"last\":\"doe\"} ,\"places\":{\"country\":\"Jamaica\"}}"));
+//                Asserts.isEqual("sam", obj.getObject("name").getString("first"));
+//            }
+//        });
 
 
-//        tests.add("Test case 8, {{}, {}}", new Test() {
+//        tests.add("Test case 9, {{}, {}}", new Test() {
 //            @Override
 //            public void run(JSONFactory factory) throws Exception {
 //                MyJSONParser jsonParser = new MyJSONParser();

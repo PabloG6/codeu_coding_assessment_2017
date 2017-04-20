@@ -57,11 +57,13 @@ final class Tester {
 
     public void run(JSONFactory factory) {
         for (final Map.Entry<String, Test> test : tests.entrySet()) {
+
             try {
                 test.getValue().run(factory);
-
+                System.out.println();
                 System.out.format("PASS : Test %s\n", test.getKey());
             } catch (Exception ex) {
+                System.out.println();
                 System.out.format("FAIL : Test %s (%s)\n", test.getKey(), ex.toString());
             }
         }

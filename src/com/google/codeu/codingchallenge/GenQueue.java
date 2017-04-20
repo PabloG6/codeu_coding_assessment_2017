@@ -58,6 +58,12 @@ class GenQueue {
         return list.peek();
     }
 
+    public Integer findLessThan(int k) {
+        for (int i = 0; i < list.size(); i++) {
+        }
+        return -1;
+    }
+
     public boolean isEmpty() {
         return !(list.size() > 0);
     }
