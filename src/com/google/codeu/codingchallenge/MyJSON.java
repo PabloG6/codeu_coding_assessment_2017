@@ -63,6 +63,10 @@ final class MyJSON implements JSON {
 
     @Override
     public void getObjects(Collection<String> names) {
+        for (String name :
+                jsonObjects.keySet()) {
+            names.add(name);
+        }
 
     }
 
@@ -70,10 +74,11 @@ final class MyJSON implements JSON {
     public void getStrings(Collection<String> names) {
         // TODO: implement this
         //// TODO: 4/14/2017 implement recursion that breaks out when object being returned will be null
+        for (String name :
+                stringObjects.keySet()) {
+            names.add(name);
+        }
     }
 
-    public MyJSON setObject(String key, MyJSON json, String key2) {
 
-        return this;
-    }
 }

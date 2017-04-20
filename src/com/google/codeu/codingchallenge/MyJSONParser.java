@@ -17,68 +17,67 @@ package com.google.codeu.codingchallenge;
 import com.sun.xml.internal.ws.policy.privateutil.PolicyUtils;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Stack;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 final class MyJSONParser implements JSONParser {
     private static final String key_regex = "(\"[\\w\\s ]+\")";
-    private MyJSON myJSON = new MyJSON();
-    ArrayList<Integer> bracketPositions = new ArrayList<>();
+    private JSON json = new MyJSON();
+    GenQueue<Integer> frontBrace = new GenQueue<>();
+    Stack<Integer> backBrace = new Stack<>();
+
     private int preComma = 1;
     private int nextComma;
     int commaCount;
 
     //keep position of commas and colons
-    ArrayList<Integer> commas = new ArrayList<>();
-    ArrayList<Integer> colons = new ArrayList<>();
-    private int colonPosition = 0;
-    private int colonCount = 0;
+    GenQueue<Integer> commas = new GenQueue<>();
 
     @Override
-    public MyJSON parse(String in) throws IOException {
+    public JSON parse(String in) throws IOException {
 
         //create boolean array to store position of curly braces.
         //true means "{", false means "}"
-        if (isBalanced(in, bracketPositions)) {
-            jsonify(in);
-            return myJSON;
+        if (isBalanced(in)) {
+
+            json = testJsonIfy(in);
+
+            return json;
         } else {
 
-            throw new IOException("This is not a valid json object");
+            throw new IOException("Invalid number of curly braces");
         }
-
     }
 
     /**
-     * @param in                 string to validate
-     * @param positionOfBrackets store the position of the brackets for quickeer look up
-     * @return return boolean if expression is unbalanced
+     * @param in string to validate
+     * @return return false if expression is unbalanced
      */
 
 
-    private boolean isBalanced(String in, ArrayList positionOfBrackets) throws IOException {
+    private boolean isBalanced(String in) throws IOException {
         Stack<Character> brackets = new Stack<>();
         for (int i = 0; i < in.length(); i++) {
             char var = in.charAt(i);
             if (var == ':') {
-                colons.add(i);
+
             }
 
 
             if (var == ',') {
-                commas.add(i);
+                commas.enqueue(i);
             }
             if (var == '{') {
                 brackets.push(var);
+                frontBrace.enqueue(i);
 
             } else if (var == '}') {
 
 
                 if (brackets.isEmpty()) return false;
                 if (brackets.pop() != '{') return false;
-
+                backBrace.push(i);
 
             }
         }
@@ -99,71 +98,57 @@ final class MyJSONParser implements JSONParser {
     }
 
 
-    private MyJSON jsonify(String in) throws IOException {
+    private JSON jsonify(String in) throws IOException {
         int start = eatSpaces(in);
         in = in.substring(start);
 
 
-
         //find first colon
-        setColonPositions();
-        setCommaPositions(nextComma);
-        if (commas.size() != 0) {
-            nextComma = commas.get(0);
-
-            while (in.contains(":")) {
 
 
-                setColonPositions();
-                setCommaPositions(nextComma);
-                if(!in.contains(":")) {
-                  //do something
-                }
-                int val = eatSpaces(in.indexOf(":"), in);
-                if (in.substring(val+1).charAt(1) == '{') {
+        while (in.contains(":")) {
+
+            //start to the right of colon
+            int val = eatSpaces(in.indexOf(":") + 1, in);
+
+            if (in.substring(val).charAt(0) == '{') {
+                String key = matcher(key_regex, in);
+                in = in.substring(val + 1);
+                json.setObject(key, deepJSON(in.substring(0, in.indexOf('}') + 1)));
+
+
+            } else {
+                try {
                     String key = matcher(key_regex, in);
-                    myJSON.setObject(key, deepJSON(key, in.substring(val+1, in.indexOf('}') + 1)));
-in = in.substring(val+1);
+                    if (key == null)
+                        throw new IOException("Key is null");
 
-                } else {
-                    try {
-                        String key = matcher(key_regex, in);
-                        if (key == null)
-                            throw new IOException("Key is null");
-                        in = in.substring(in.indexOf(":"));
-
-                        String object = matcher(key_regex, in);
-                        if (object == null) {
-                            throw new IOException("Object is null");
-                        }
-
-                        in = in.substring(object.length()+3);
-                         val = eatSpaces(0, in);
-                        in = in.substring(val);
-                        if(in.charAt(0) != ',' & in.charAt(0) !='}') {
-                            System.out.println("final in " +in);
-                            throw new IOException("object not separated by comma. Invalid json");
-                        }
-
-                        myJSON.setString(key, object);
-                    } catch (StringIndexOutOfBoundsException ex) {
-                        ex.printStackTrace();
+                    in = in.substring(in.indexOf(":"));
+                    String object = matcher(key_regex, in);
+                    if (object == null) {
+                        throw new IOException("Object is null");
                     }
 
+                    in = in.substring(object.length() + 3);
+                    val = eatSpaces(0, in);
+                    in = in.substring(val);
+                    if (in.charAt(0) != ',' & in.charAt(0) != '}') {
+
+                    }
+
+                    json.setString(key, object);
+                } catch (StringIndexOutOfBoundsException ex) {
+                    ex.printStackTrace();
                 }
 
             }
+
         }
 
-        return myJSON;
+
+        return json;
     }
 
-    private void setColonPositions() {
-        if (colonCount < colons.size())
-            colonPosition = colons.get(colonCount);
-        colonCount++;
-
-    }
 
     /**
      * find next json object in string
@@ -172,40 +157,44 @@ in = in.substring(val+1);
      * @return MyJSON object
      */
 
-    private MyJSON deepJSON(String key, String in) throws IOException {
-;
+    private MyJSON deepJSON(String in) throws IOException {
+        ;
         MyJSON object = new MyJSON();
-         if (in.charAt(in.indexOf(":")) == '{') {
-             String key1 = findKey(0, in);
-             in = in.substring(key.length()+3);
-             Log.i("Deep JSON", in);
-             return object.setObject(key1, deepJSON(key1, in.substring(in.indexOf(":") + 1, in.indexOf("}") + 1)));
-         }
+        int start = eatSpaces(in.indexOf(":") + 1, in);
+        if (in.charAt(in.substring(start).charAt(0)) == '{') {
+            String key1 = findKey(0, in);
 
-
-        else {
+            //modify the string to remove the key found
+            in = in.substring(key1.length() + 3);
+            return object.setObject(key1, deepJSON(in.substring(in.indexOf(":") + 1, in.indexOf("}") + 1)));
+        } else {
             //if the next object is not a { but a string create a json object
 
             //if the string in question contains commas, split it into an array of json objects
-            if(in.contains(",")) {
-                MyJSON json = new MyJSON();
-               String[] key_value_pairs = in.split(",");
-                for (int i = 0; i < key_value_pairs.length; i++) {
-                    System.out.println(key_value_pairs[i]);
-                    String key2 = matcher(key_regex, key_value_pairs[i]);
-                    String value = matcher(key_regex, key_value_pairs[i].substring(key_value_pairs[i].indexOf(":")));
-                    System.out.printf("%s %s \n", key, value);
-                    if(myJSON!=null) {
-                        object.setString(key2,  value);
-                    }
-                }
+            if (in.contains(",")) {
+                //find next two commas
+                int first = 0;
+                int second = in.indexOf(',');
 
+                while (first != -1 && second != -1) {
+                    System.out.printf("first: %d, second: %d \n", first, second);
+                    String s = in.substring(first + 1, second);
+                    first = in.indexOf(',', first + 1);
+                    second = in.indexOf(',', second + 1);
+                    if (s.contains("{")) {
+                        String key2 = matcher(key_regex, in);
+                        object.setObject(key2, deepJSON(in.substring(first).substring(in.indexOf(":") + 1, in.indexOf('}'))));
+                    }
+                    System.out.println(s);
+
+                }
 
 
             }
 
-             return object;
+            return object;
         }
+
     }
 
     private int eatSpaces(String in) throws IOException {
@@ -244,22 +233,74 @@ in = in.substring(val+1);
     /**
      * set the previous and nextCommaPositions
      */
-    private void setCommaPositions(int next) {
-        this.preComma = next;
-        if (commaCount < commas.size())
-            this.nextComma = commas.get(commaCount);
-        commaCount++;
 
+    JSON testJsonIfy(String in) throws IOException {
+        return testDeepJSON(in, in.substring(frontBrace.dequeue()+1, backBrace.pop()));
     }
 
-    //prints log statements for easier debugging
-    public static class Log {
-        public static void i(String key, String value) {
-            System.out.printf("%s, %s \n", key, value);
-        }
 
+    public JSON testDeepJSON(String in, String parseObject) throws IOException {
+        //first parse the object first
+        JSON json = new MyJSON();
+
+
+        GenQueue<Integer> commaQueue = new GenQueue<>(commas);
+
+
+        //find and replace curly braces
+        // because they've already been passed in recursive function
+
+        if (in.contains("{") && !frontBrace.isEmpty() && !backBrace.isEmpty()) {
+            int front = frontBrace.dequeue();
+            int back = backBrace.pop();
+            //split the string based on first square brace
+            StringBuilder builder = new StringBuilder(in);
+            builder.setCharAt(front, '[');
+            builder.setCharAt(back, ']');
+            in = builder.toString();
+
+            //this may have multiple json objects so split by comma and set values
+            String split[] = parseObject.split(",");
+
+            for (int i = 0; i<split.length; i++) {
+                String s = split[i];
+
+                commaQueue.dequeue();
+                if(!s.contains("{")) {
+
+                    String key = matcher(key_regex, s);
+                    String value = matcher(key_regex, s.substring(key.length()));
+                    json.setString(key, value);
+                } else {
+                    String key = matcher(key_regex, s);
+                    return json.setObject(key, testDeepJSON(in, in.substring(front+1, back)));
+
+
+                }
+            }
+
+
+            return json;
+
+
+        }
+        for (String t : parseObject.split(",")) {
+            parseObject = parseObject.substring(1, parseObject.length());
+
+            String key = matcher(key_regex, t);
+            if (key == null)
+                throw new IOException("No key is present for " + t + " question");
+
+            t = t.substring(key.length());
+            String value = matcher(key_regex, t);
+            if(value == null)
+                throw new IOException("Value is empty for this key");
+            json.setString(key, value);
+        }
+        return json;
     }
 
 
 }
+
 
